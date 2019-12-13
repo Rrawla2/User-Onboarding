@@ -24,7 +24,6 @@ const OnboardForm = ({ values, errors, touched, status }) => {
             <Form>
                 <label htmlFor="name">  Name:
                     <Field
-                        id="name"
                         type="text"
                         name="name"
                         placeholder="Enter name"
@@ -37,7 +36,6 @@ const OnboardForm = ({ values, errors, touched, status }) => {
                 <br />
                 <label htmlFor="password">  Password:
                     <Field
-                        id="password"
                         type="text"
                         name="password"
                         placeholder="Enter password"
@@ -50,7 +48,6 @@ const OnboardForm = ({ values, errors, touched, status }) => {
                 <br />
                 <label htmlFor="email">  E-Mail:
                     <Field
-                        id="email"
                         type="text"
                         name="email"
                         placeholder="Enter E-Mail address"
@@ -60,10 +57,10 @@ const OnboardForm = ({ values, errors, touched, status }) => {
                 <br />
                     <Field
                         type="checkbox"
-                        name="Terms of Service"
+                        name="terms"
                         checked={values.terms}
                     />
-                    <label htmlFor="checkbox">
+                    <label>
                     Terms of Service
                     <br />
                     <span className="checkmark" />
@@ -75,7 +72,7 @@ const OnboardForm = ({ values, errors, touched, status }) => {
             {user.map(person => {
                 console.log(person)
                 return (
-                    <ul key={person.id}>
+                    <ul key={person.name}>
                         <li>Name: {person.name}</li>
                         <li>E-Mail: {person.email}</li>
                     </ul>
@@ -85,13 +82,13 @@ const OnboardForm = ({ values, errors, touched, status }) => {
     )
 }
 const FormikOnboardForm = withFormik({
-    mapPropsToValues(props) {
+    mapPropsToValues({name, password, email, terms}) {
         //console.log(props)
         return {
-            name: props.name || "",
-            password: props.password || "",
-            email: props.email || "",
-            termsofservice: props.terms || ""
+            name: name || "",
+            password: password || "",
+            email: email || "",
+            terms: terms || false
         }
     },
 
@@ -107,7 +104,7 @@ const FormikOnboardForm = withFormik({
             .then(response => {
                 console.log("Received data", response);
                 setStatus(response.data);
-                resetForm();
+                resetForm()
             })
             .catch(error => console.log(error.response));
     

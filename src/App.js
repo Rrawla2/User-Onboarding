@@ -5,7 +5,7 @@ import OnboardForm from "./components/Form";
 function App() {
   return (
     <div className="App">
-    <OnboardForm /> 
+    <OnboardForm props=""/> 
     </div>
   );
 }
