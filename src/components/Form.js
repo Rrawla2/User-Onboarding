@@ -5,6 +5,7 @@ import axios from "axios";
 
 
 
+
 const OnboardForm = ({ values, errors, touched, status }) => {
     // console.log("values", values);
     // console.log("errors", errors);
@@ -32,6 +33,16 @@ const OnboardForm = ({ values, errors, touched, status }) => {
                     {touched.name && errors.name && (
                         <p>{errors.name}</p>
                     )}
+                </label>
+                <br />
+                <br />
+                <label htmlFor="role">  Role:
+                    <Field as="select" name="role">
+                    <option selected hidden>Choose an Option</option>
+                    <option value="Web Developer">Web Developer</option>
+                    <option value="Team Leader">Team Leader</option>
+                    <option value="UI/UX Designer">UI/UX Designer</option>
+                    </Field>
                 </label>
                 <br />
                 <br />
@@ -76,8 +87,9 @@ const OnboardForm = ({ values, errors, touched, status }) => {
                 console.log(person)
                 return (
                     <ul key={person.name}>
-                        <li>Name: {person.name}</li>
-                        <li>E-Mail: {person.email}</li>
+                        <li style={{listStyleType: "none"}}>Name: {person.name}</li>
+                        <li style={{listStyleType: "none"}}>Role: {person.role}</li>
+                        <li style={{listStyleType: "none"}}>E-Mail: {person.email}</li>
                     </ul>
                 )
             })}
@@ -86,28 +98,29 @@ const OnboardForm = ({ values, errors, touched, status }) => {
 }
 const FormikOnboardForm = withFormik({
     mapPropsToValues({ name, password, email, terms }) {
-        console.log("name", name)
         return {
             name: name || "",
             password: password || "",
             email: email || "",
-            terms: terms || false
+            terms: terms || false,
         }
     },
 
     validationSchema: Yup.object().shape({
         name: Yup.string().required("You must enter a name"),
+        role: Yup.string().required("Please enter your role!"),
         password: Yup.string().required("You must enter a password")
+        
     }),
 
     handleSubmit(values, { setStatus, resetForm }) {
         console.log("Submitted", values);
         axios
-            .post("https://regres.in/api/users", values)
+            .post("https://reqres.in/api/users", values)
             .then(response => {
                 console.log("Received data", response);
                 setStatus(response.data);
-                resetForm()
+                resetForm();
             })
             .catch(error => console.log(error.response));
     
@@ -115,7 +128,5 @@ const FormikOnboardForm = withFormik({
         
 
 })(OnboardForm);
-
-
 
 export default FormikOnboardForm;
