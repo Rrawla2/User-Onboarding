@@ -27,6 +27,7 @@ const OnboardForm = ({ values, errors, touched, status }) => {
                         type="text"
                         name="name"
                         placeholder="Enter name"
+                        value={values.name}
                     />
                     {touched.name && errors.name && (
                         <p>{errors.name}</p>
@@ -39,6 +40,7 @@ const OnboardForm = ({ values, errors, touched, status }) => {
                         type="text"
                         name="password"
                         placeholder="Enter password"
+                        value={values.password}
                     />
                     {touched.password && errors.password && (
                         <p>{errors.password}</p>
@@ -51,6 +53,7 @@ const OnboardForm = ({ values, errors, touched, status }) => {
                         type="text"
                         name="email"
                         placeholder="Enter E-Mail address"
+                        value={values.email}
                     />
                 </label>
                 <br />
@@ -82,8 +85,8 @@ const OnboardForm = ({ values, errors, touched, status }) => {
     )
 }
 const FormikOnboardForm = withFormik({
-    mapPropsToValues({name, password, email, terms}) {
-        //console.log(props)
+    mapPropsToValues({ name, password, email, terms }) {
+        console.log("name", name)
         return {
             name: name || "",
             password: password || "",
